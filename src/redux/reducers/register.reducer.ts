@@ -1,4 +1,4 @@
-import { LOGIN_EMPLOYEE, LOGIN_EMPLOYEE_FAIL, LOGIN_EMPLOYEE_SUCCESS } from '../types/login.types';
+import { REGISTER_EMPLOYEE, REGISTER_EMPLOYEE_FAIL, REGISTER_EMPLOYEE_SUCCESS } from '../types/register.types';
 
 
 const initialState = {
@@ -12,20 +12,20 @@ const initialState = {
 
 const reducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case LOGIN_EMPLOYEE: {
+        case REGISTER_EMPLOYEE: {
             return {
                 ...state,
                 loading: true
             }
         }
-        case LOGIN_EMPLOYEE_FAIL:
+        case REGISTER_EMPLOYEE_FAIL:
             return {
                 ...state,
                 loading: false,
                 apiStatus: 'Fail',
-                apiResponse: action.payload ?? 'Failed to login'
+                apiResponse: action.payload ?? 'Failed to REGISTER'
             }
-        case LOGIN_EMPLOYEE_SUCCESS:
+        case REGISTER_EMPLOYEE_SUCCESS:
             return {
                 ...state,
                 loading: false,

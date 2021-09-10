@@ -15,3 +15,16 @@
     text-align: center;
     padding: 10px;
 }
+.badge{
+    background-color: #198754;
+    text-transform: capitalize;
+}
+.cardContainer{
+    margin: 20px;
+}
+.threedots{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 200px;
+}

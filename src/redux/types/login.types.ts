@@ -1,0 +1,5 @@
+export const LOGIN_EMPLOYEE: string = 'LOGIN_EMPLOYEE';
+
+export const LOGIN_EMPLOYEE_FAIL: string = 'LOGIN_EMPLOYEE_FAIL';
+
+export const LOGIN_EMPLOYEE_SUCCESS: string = 'LOGIN_EMPLOYEE_SUCCESS';

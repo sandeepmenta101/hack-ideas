@@ -11,7 +11,7 @@ export default function AppNav() {
                     <Nav className="ms-auto">
                         <Nav.Link><Link to='/dashboard'>Dashboard</Link></Nav.Link>
                         <Nav.Link>
-                            <Link to='/events'>
+                            <Link to='/add-events'>
                             Events
                             </Link>
                         </Nav.Link>

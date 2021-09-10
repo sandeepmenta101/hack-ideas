@@ -48,7 +48,7 @@ export default function Dashboard() {
         <Row>
           <h1>Welcome, Sandeep</h1>
         </Row>
-        <Row xs={1} md={2} className="g-4">
+        <Row xs={1} md={3} className="g-3">
           {events.map((event) => (
             <EventCard {...event} />
           ))}

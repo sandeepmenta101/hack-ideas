@@ -1,25 +1,32 @@
-import { LOGIN_EMPLOYEE, LOGIN_EMPLOYEE_FAIL, LOGIN_EMPLOYEE_SUCCESS } from '../types/login.types';
 
-const initialState = { isAuthenticated: false, darkTheme: false, employeeId: '', loading: false, apiStatus: '', apiResponse: '', employeeName: '' }
+import { FETCH_EVENTS, FETCH_EVENTS_FAIL, FETCH_EVENTS_SUCCESS } from '../actions/dashboard.actions';
+
+const initialState = {
+    isLoading: false,
+    events: [],
+    apiStatus: '',
+    apiResponse: ''
+}
+
 const reducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case LOGIN_EMPLOYEE: {
-            return { ...state, loading: true }
+        case FETCH_EVENTS: {
+            return { ...state, isLoading: true }
         }
-        case LOGIN_EMPLOYEE_FAIL:
+        case FETCH_EVENTS_FAIL:
             return {
                 ...state,
-                loading: false,
+                isLoading: false,
                 apiStatus: 'Fail',
                 apiResponse: action.payload ?? 'Failed to login'
             }
-        case LOGIN_EMPLOYEE_SUCCESS:
+        case FETCH_EVENTS_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 apiStatus: 'Success',
                 apiResponse: action.payload ?? 'Successfully logged in',
-                employeeId: action.payload.employeeId
+                events: action.payload
             }
         default:
             return state;

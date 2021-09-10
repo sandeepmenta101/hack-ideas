@@ -1,23 +1,29 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { lazy, Suspense } from 'react';
+import { Provider } from 'react-redux';
 
 import './App.scss';
 import AppLayout from './layout';
+import configureStore from "./store";
 
 const LoginComponent = lazy(() => import('./pages/login'));
 const RegisterComponent = lazy(() => import('./pages/register'));
+const DashboardComponent = lazy(() => import('./pages/dashboard'));
 
 function App() {
   return (
     <div className="App">
+      <Provider store={configureStore}>
       <Suspense fallback={<p>Loading...</p>}>
         <Router>
           <Switch>
           <Route path="/" exact><LoginComponent /></Route>
-            <Route path="/login"><LoginComponent /></Route>
-            <Route path="/register"><RegisterComponent /></Route>
+            <Route exact path="/login"><LoginComponent /></Route>
+            <Route exact path="/register"><RegisterComponent /></Route>
             <Route exact path="/dashboard">
-              <AppLayout />
+              <AppLayout>
+                <DashboardComponent />
+              </AppLayout>
             </Route>
             <Route exact path="/events">
               <AppLayout />
@@ -25,6 +31,7 @@ function App() {
           </Switch>
         </Router>
       </Suspense>
+      </Provider>
     </div>
   );
 }

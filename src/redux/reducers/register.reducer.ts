@@ -28,8 +28,8 @@ const reducer = (state = initialState, action: any) => {
                 ...state,
                 loading: false,
                 apiStatus: 'Success',
-                apiResponse: action.payload ?? 'Successfully logged in',
-                employeeId: action.payload.employeeId
+                apiResponse: 'Successfully registered',
+                employeeId: action.employeeId
             }
         default:
             return state;

@@ -9,7 +9,7 @@ import configureStore from "./store";
 const LoginComponent = lazy(() => import("./pages/login"));
 const RegisterComponent = lazy(() => import("./pages/register"));
 const DashboardComponent = lazy(() => import("./pages/dashboard"));
-const EventFormComponent = lazy(() => import("./pages/EventForm"));
+const EventFormComponent = lazy(() => import("./pages/EventForm/index"));
 
 function App() {
   return (

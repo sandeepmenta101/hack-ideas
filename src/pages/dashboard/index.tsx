@@ -1,12 +1,24 @@
-import { useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Container, Row, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 import { RootState } from "../../store";
 import EventCard from "../../common/card";
+import useLocalStorage from "../../customHooks/useLocalStorage";
 export default function Dashboard() {
   const dispatch = useDispatch();
   const { employeeName } = useSelector((state: RootState) => state.login);
+  const [selectedTag, setSelectedTag] = useState('');
+  const [employee] = useLocalStorage('employee');
+  const history = useHistory();
+
+  useEffect(() => {
+    if(!employee?.isAuthenticated){
+      history.push('/login');
+    }
+  }, []);
+
   const events = [
     {
       name: "Hackathon",
@@ -42,11 +54,25 @@ export default function Dashboard() {
     },
   ];
 
+  const setTag = (e: any) => {
+    console.log(e);
+  }
+
   return (
     <>
-      <Container>
+      <Container className="mt-3">
         <Row>
-          <h1>Welcome, Sandeep</h1>
+          <h1 className="col-10">Welcome, {employeeName}</h1>
+          <Dropdown className="col-2">
+            <Dropdown.Toggle variant="success" id="dropdown-basic" onSelect={(e) => console.log(e)}>
+              Sort By Tag: {selectedTag}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item eventKey="tech">Tech</Dropdown.Item>
+              <Dropdown.Item eventKey="feature">Feature</Dropdown.Item>
+              <Dropdown.Item eventKey="non-tech">Non Tech</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Row>
         <Row xs={1} md={3} className="g-3">
           {events.map((event) => (

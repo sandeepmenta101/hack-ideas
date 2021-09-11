@@ -7,16 +7,17 @@ import { useHistory } from "react-router";
 import styles from "../../styles/login.module.scss";
 import { RootState } from '../../store';
 import { loginEmployee } from '../../redux/actions/login.actions';
-
+import useLocalStorage from "../../customHooks/useLocalStorage";
 export default function Login() {
   const [formData, setFormData] = useState({
     employeeId: "",
   });
   const [toggleAlert, setToggleAlert] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(true);
-  const { apiResponse, apiStatus } = useSelector((state: RootState) => state.login);
+  const { apiResponse, apiStatus, employeeName, isAuthenticated } = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [employee, setEmployee] = useLocalStorage('employee');
 
   useEffect(() => {
     if(apiStatus === 'Fail'){
@@ -24,6 +25,7 @@ export default function Login() {
     }else if(apiStatus === 'Success'){
       setToggleAlert(true);
       history.push('/dashboard');
+      setEmployee({ isAuthenticated, employeeName });
     }else if(apiStatus.length === 0){
       setToggleAlert(false);
     }

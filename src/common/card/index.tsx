@@ -7,8 +7,11 @@ export default function EventCard({
   votes,
   description,
   tags,
-  date,
+  startDate,
+  endDate
 }: EventInterface) {
+  console.log(votes);
+
   return (
     <Card className={styles.cardContainer}>
       <Card.Header>{name}</Card.Header>
@@ -34,8 +37,8 @@ export default function EventCard({
         )}
       </Card.Body>
       <Card.Footer>
-        <small>{new Date(date).toLocaleDateString()}</small>
-        <p className="float-end">{votes} Voted</p>
+        <small>Start: {new Date(startDate).toLocaleDateString()}  {new Date(startDate).toLocaleTimeString()} - End: {new Date(endDate).toLocaleDateString()} { new Date(endDate).toLocaleTimeString()} </small>
+        <p className="float-end">{votes === undefined ? 0 : votes} Voted</p>
       </Card.Footer>
     </Card>
   );

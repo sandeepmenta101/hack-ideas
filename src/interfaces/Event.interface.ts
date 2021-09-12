@@ -1,7 +1,8 @@
 export interface EventInterface {
-    name: string
-    votes: number,
-    date: string,
-    description: string,
-    tags: string[]
+    name: string;
+    votes: number;
+    startDate: string;
+    endDate: string;
+    description: string;
+    tags: string[];
 }

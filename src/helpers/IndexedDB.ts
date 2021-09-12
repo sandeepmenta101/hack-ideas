@@ -11,8 +11,8 @@ export class IndexedDB {
             let dbRequest = window.indexedDB.open(this._config.dbName);
             dbRequest.onerror = (e) => { reject(Error("Couldn't open database.")); };
             dbRequest.onupgradeneeded = (e: any) => {
-                e.target.transaction.abort();
-                reject(Error("Database version not found."));
+                let database = e.target.result;
+                const objectStore = database.createObjectStore(this._config.storeName);
             };
             dbRequest.onsuccess = (e: any) => {
                 let database = e.target.result;
@@ -48,7 +48,7 @@ export class IndexedDB {
             dbRequest.onerror = (e) => { reject(Error("Couldn't open database.")); };
             dbRequest.onupgradeneeded = (e: any) => {
                 let database = e.target.result;
-                const objectStore = database.createObjectStore(this._config.storeName);
+                database.createObjectStore(this._config.storeName);
             };
             dbRequest.onsuccess = (e: any) => {
                 let database = e.target.result;

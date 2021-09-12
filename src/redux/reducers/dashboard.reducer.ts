@@ -1,5 +1,5 @@
 
-import { FETCH_EVENTS, FETCH_EVENTS_FAIL, FETCH_EVENTS_SUCCESS } from '../actions/dashboard.actions';
+import { FETCH_EVENTS, FETCH_EVENTS_FAIL, FETCH_EVENTS_SUCCESS } from '../types/dashboard.types';
 
 const initialState = {
     isLoading: false,
@@ -18,15 +18,15 @@ const reducer = (state = initialState, action: any) => {
                 ...state,
                 isLoading: false,
                 apiStatus: 'Fail',
-                apiResponse: action.payload ?? 'Failed to login'
+                apiResponse: action.type ?? 'Failed to login'
             }
         case FETCH_EVENTS_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 apiStatus: 'Success',
-                apiResponse: action.payload ?? 'Successfully logged in',
-                events: action.payload
+                apiResponse: action.type ?? 'Successfully logged in',
+                events: action.events
             }
         default:
             return state;

@@ -1,14 +1,11 @@
 import { Navbar, Container, Nav, Button } from "react-bootstrap";
 import { NavLink, useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react';
+import { useDispatch } from "react-redux";
 
 import styles from '../../styles/styles.module.scss';
 import { logoutEmployee } from '../../redux/actions/login.actions';
-import { RootState } from "../../store";
 export default function AppNav() {
   const dispatch = useDispatch();
-  const { apiResponse } = useSelector((state: RootState) => state.login);
   const history = useHistory();
 
   const logoutFromSystem = () => {

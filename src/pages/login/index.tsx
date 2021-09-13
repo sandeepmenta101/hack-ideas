@@ -12,8 +12,8 @@ export default function Login() {
   const [formData, setFormData] = useState({
     employeeId: "",
   });
-  const [toggleAlert, setToggleAlert] = useState(false);
-  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [toggleAlert, setToggleAlert] = useState<boolean>(false);
+  const [disableSubmit, setDisableSubmit] = useState<boolean>(true);
   const { apiResponse, apiStatus, employeeName, isAuthenticated } = useSelector((state: RootState) => state.login);
   const dispatch = useDispatch();
   const history = useHistory();

@@ -1,7 +1,10 @@
-import { Badge, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { useState } from "react";
+import { Badge, OverlayTrigger, Tooltip, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 
 import { EventInterface } from "../../interfaces/Event.interface";
 import styles from "../../styles/card.module.scss";
+import { voteEvent } from '../../redux/actions/dashboard.actions';
 export default function EventCard({
   name,
   votes,
@@ -9,7 +12,15 @@ export default function EventCard({
   tags,
   startDate,
   endDate,
+  id
 }: EventInterface) {
+  const [voted, setVoted] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+  const voteEventForm = () => {
+    setVoted(!voted);
+    dispatch(voteEvent(!voted, id));
+  }
   
   return (
     <div className={styles.card}>
@@ -20,7 +31,7 @@ export default function EventCard({
         </div>
         <div>
           {
-            Array.isArray(tags) && tags.length > 0 && tags?.map((tag, i) => <Badge bg="success" key={`badge=${i}`}>{tag}</Badge>)
+            Array.isArray(tags) && tags.length > 0 && tags?.map((tag, i) => <Badge bg="success" className={styles.badge} key={`badge=${i}`}>{tag}</Badge>)
           }
         </div>
       </div>
@@ -39,7 +50,7 @@ export default function EventCard({
       </div>
       <div className={styles.cardFooter}>
         <p>From: {new Date(startDate).toLocaleString()} - To: {new Date(endDate).toLocaleString()}</p>
-        <p><i className="fas fa-thumbs-up"></i> {votes === undefined ? '0 voted': votes + ' voted'}</p>
+        <p><Button onClick={voteEventForm} variant={voted ? 'success' : 'secondary'}>{voted ? <i className={`fas fa-thumbs-up ${styles.whiteColor}`}></i> : <i className={`far fa-thumbs-up ${styles.whiteColor}`}></i>}</Button> {votes === undefined ? '0 voted': votes + ' voted'}</p>
       </div>
     </div>
   );

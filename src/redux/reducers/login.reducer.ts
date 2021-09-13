@@ -1,4 +1,4 @@
-import { LOGIN_EMPLOYEE, LOGIN_EMPLOYEE_FAIL, LOGIN_EMPLOYEE_SUCCESS } from '../types/login.types';
+import { LOGIN_EMPLOYEE, LOGIN_EMPLOYEE_FAIL, LOGIN_EMPLOYEE_SUCCESS, LOGOUT_EMPLOYEE } from '../types/login.types';
 
 const initialState = { isAuthenticated: false, employeeId: '', loading: false, apiStatus: '', apiResponse: '', employeeName: '' }
 const reducer = (state = initialState, action: any) => {
@@ -22,6 +22,15 @@ const reducer = (state = initialState, action: any) => {
                 employeeId: action.employee.employeeId,
                 employeeName: action.employee.employeeName,
                 isAuthenticated: true
+            }
+        case LOGOUT_EMPLOYEE:
+            return {
+                ...state,
+                apiResponse: 'Successfully logged out from system',
+                apiStatus: 'Logout Success',
+                isAuthenticated: false,
+                employeeName: '',
+                employeeId: ''
             }
         default:
             return state;

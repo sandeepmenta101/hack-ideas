@@ -1,21 +1,39 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Navbar, Container, Nav, Button } from "react-bootstrap";
+import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from 'react';
 
+import styles from '../../styles/styles.module.scss';
+import { logoutEmployee } from '../../redux/actions/login.actions';
+import { RootState } from "../../store";
 export default function AppNav() {
+  const dispatch = useDispatch();
+  const { apiResponse } = useSelector((state: RootState) => state.login);
+  const history = useHistory();
+
+  const logoutFromSystem = () => {
+    dispatch(logoutEmployee());
+    localStorage.removeItem('employee');
+    history.push('/login');
+  }
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Navbar.Brand>
-          <Link to="/dashboard">Hack Ideas</Link>
+          <NavLink className={styles.link} to="/dashboard">Hack Ideas</NavLink>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link>
-              <Link to="/dashboard">Dashboard</Link>
+              <NavLink className={styles.link} activeClassName={styles.active} to="/dashboard">Dashboard</NavLink>
             </Nav.Link>
             <Nav.Link>
-              <Link to="/add-events">Add Events</Link>
+              <NavLink className={styles.link} activeClassName={styles.active} to="/add-events">Add Events</NavLink>
+            </Nav.Link>
+            <Nav.Link>
+              <Button title="Logout" onClick={logoutFromSystem}><i className="fas fa-power-off"></i></Button>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

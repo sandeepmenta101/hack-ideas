@@ -1,5 +1,4 @@
 import { LoginInterface } from "../interfaces/Login.interface";
-import { RegisterInterface } from "../interfaces/Register.interface";
 
 export class IndexedDB {
     private _config;
@@ -12,7 +11,7 @@ export class IndexedDB {
             dbRequest.onerror = (e) => { reject(Error("Couldn't open database.")); };
             dbRequest.onupgradeneeded = (e: any) => {
                 let database = e.target.result;
-                const objectStore = database.createObjectStore(this._config.storeName);
+                    database.createObjectStore(this._config.storeName);
             };
             dbRequest.onsuccess = (e: any) => {
                 let database = e.target.result;
@@ -42,7 +41,7 @@ export class IndexedDB {
             };
         });
     }
-    save(key: string, value:object) {
+    save(key: string, value: object) {
         return new Promise((resolve, reject) => {
             let dbRequest = indexedDB.open(this._config.dbName);
             dbRequest.onerror = (e) => { reject(Error("Couldn't open database.")); };
@@ -54,16 +53,19 @@ export class IndexedDB {
                 let database = e.target.result;
                 let transaction = database.transaction([this._config.storeName], 'readwrite');
                 let objectStore = transaction.objectStore(this._config.storeName);
-                const employees = objectStore.get(key);
-                let response = [];
-                if(employees.length > 0){
-                    response = [...employees, value]
-                }else{
-                    response.push(value);
+                const objectStoreData = objectStore.get(key);
+                objectStoreData.onsuccess = (e: any) => {
+                    const data = e.target.result;
+                    let response = [];
+                    if (data.length > 0) {
+                        response = [...data, value]
+                    } else {
+                        response.push(value);
+                    }
+                    let objectRequest = objectStore.put(response, key);
+                    objectRequest.onerror = (e: any) => { reject(Error("Error while saving.")); };
+                    objectRequest.onsuccess = (e: any) => { resolve("Saved data successfully."); };    
                 }
-                let objectRequest = objectStore.put(response, key);
-                objectRequest.onerror = (e: any) => { reject(Error("Error while saving.")); };
-                objectRequest.onsuccess = (e: any) => { resolve("Saved data successfully."); };
             };
         });
     }
@@ -85,13 +87,13 @@ export class IndexedDB {
                 objectStoreTitleRequest.onsuccess = () => {
                     const employees: object[] = objectStoreTitleRequest.result;
                     const employeeIndex = employees.findIndex((employeeData: any) => {
-                        if(employeeData.employeeId === employee.employeeId){
+                        if (employeeData.employeeId === employee.employeeId) {
                             return employeeData;
                         }
                     });
-                    if(employeeIndex > -1){
+                    if (employeeIndex > -1) {
                         resolve(employees[employeeIndex]);
-                    }else{
+                    } else {
                         reject(Error('Employee does not exists.'))
                     }
                 };

@@ -55,7 +55,7 @@ export default function Register() {
 		{toggleAlert && <Alert show={toggleAlert} variant={apiStatus === 'Fail' ? 'danger' : 'success'} className="mt-2" dismissible onClose={() => setToggleAlert(false)}><p>{apiResponse}</p></Alert>}  
       <Row className={`justify-content-center align-items-center ${styles.form}`}>
         <Form className="col-6 border">
-          <h1 className="text-align-center">Register</h1>
+          <h1 className={styles.textCenter}>Register</h1>
           <Form.Group className="mb-3" controlId="formBasicEmail">             
             <Form.Label className={styles.floatLeft}>Employee ID</Form.Label> 
             <Form.Control

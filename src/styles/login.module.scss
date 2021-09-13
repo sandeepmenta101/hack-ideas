@@ -22,12 +22,10 @@
 .cardContainer{
     margin: 20px;
 }
-.threedots{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 200px;
-}
+
 .capitalize{
     text-transform: capitalize;
+}
+.textCenter{
+    text-align: center;
 }

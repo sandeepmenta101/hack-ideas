@@ -1,0 +1,99 @@
+.br {
+    border-radius: 8px;  
+  }
+  .w80 {
+     width: 80%;
+  }
+  .card {
+    border: 2px solid #fff;
+    box-shadow:0px 0px 10px 0 #a9a9a9;
+    padding: 30px 40px;
+    width: 80%;
+    margin: 15px auto;
+  }
+  .profilePic {
+    height: 65px;
+    width: 65px;
+    border-radius: 50%;
+  }
+  .comment {
+    height: 10px;
+    background: #777;
+    margin-top: 20px;
+  }
+  .wrapper {
+    width: 0px;
+    animation: fullView 0.5s forwards linear;
+  }
+  
+  @keyframes fullView {
+    100% {
+      width: 100%;
+    }
+  }
+  .animate {
+    animation : shimmer 2s infinite;
+    background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+    background-size: 1000px 100%;
+ }
+ @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+  .img{
+    padding: 10px 20px;
+    border-radius: 50%;
+    color: #fff;
+    background-color: dodgerblue;
+    font-size: 2rem;
+    margin: 0 10px 0 0;
+  }
+  .title{
+      font-size: 2.2rem;
+  }
+  .cardBody{
+      margin: 20px 0 10px;
+  }
+  .cardBody p{
+      text-align: justify;
+  }
+  .cardHeader{
+      border-bottom: 1px solid lightgray;
+      padding-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .cardFooter{
+      border-top: 1px solid lightgray;
+      padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+  }
+  .cardFooter i{
+      color: dodgerblue;
+  }
+  .threedots{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+}
+.module {
+  width: 100%;
+  margin: 0 0 1em 0;
+  overflow: hidden;
+}
+.module p {
+  margin: 0;
+}
+
+.lineClamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+}

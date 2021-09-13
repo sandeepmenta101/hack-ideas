@@ -6,13 +6,15 @@ import { useHistory } from "react-router";
 import { RootState } from "../../store";
 import EventCard from "../../common/card";
 import useLocalStorage from "../../customHooks/useLocalStorage";
-import styles from '../../styles/login.module.scss';
 import { EventInterface } from "../../interfaces/Event.interface";
-import { fetchEvents } from "../../redux/actions/dashboard.actions";
+import { fetchEvents, sortByTag } from "../../redux/actions/dashboard.actions";
+import CardShimmer from "../../common/cardShimmer";
+
+const cardShimmerArr = ['1', '2', '3','4', '5'];
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const {events} = useSelector((state: RootState) => state.dashboard);
+  const {events, isLoading} = useSelector((state: RootState) => state.dashboard);
   const [selectedTag, setSelectedTag] = useState('');
   const [employee] = useLocalStorage('employee');
   const history = useHistory();
@@ -27,6 +29,7 @@ export default function Dashboard() {
 
   const setTag = (e: any) => {
     setSelectedTag(e);
+    dispatch(sortByTag(e));
   }
 
   return (
@@ -34,15 +37,16 @@ export default function Dashboard() {
       <Container className="mt-3">
         <Row>
           <h1 className="col-10">Welcome {employee.employeeName}, </h1>
-          {events.length > 0 && <DropdownButton className="col-2" title={selectedTag.length === 0 ? 'Sort by' : <p className={styles.capitalize}>{selectedTag}</p>} onSelect={setTag}>
+          <DropdownButton className="col-2" title={<p>Sort by: {selectedTag}</p>} onSelect={setTag}>
             <Dropdown.Menu>
-              <Dropdown.Item eventKey="tech">Tech</Dropdown.Item>
-              <Dropdown.Item eventKey="feature">Feature</Dropdown.Item>
-              <Dropdown.Item eventKey="non-tech">Non Tech</Dropdown.Item>
+              <Dropdown.Item eventKey="Tech">Tech</Dropdown.Item>
+              <Dropdown.Item eventKey="Feature">Feature</Dropdown.Item>
+              <Dropdown.Item eventKey="Non Tech">Non Tech</Dropdown.Item>
             </Dropdown.Menu>
-          </DropdownButton>}
+          </DropdownButton>
         </Row>
-          {events?.length === 0 ? <h3 className="text-center">No Events</h3> : <Row xs={1} md={3} className="g-4">{events.map((event: EventInterface) => (
+          { events.length === 0 && isLoading &&  cardShimmerArr.map((card) => <CardShimmer key={card} />)}
+          {events?.length === 0 ? <h3 className="text-center">No Events</h3> : <Row xs={1} md={2} className="g-4 mt-2">{events.map((event: EventInterface) => (
             <EventCard {...event} />
           ))}</Row>}
       </Container>

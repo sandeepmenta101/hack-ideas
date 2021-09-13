@@ -124,7 +124,7 @@ export class IndexedDB {
                                 ...event,
                                 votes: event.votes + 1
                             }
-                        }else{
+                        }else if(event.id === id && !voted){
                             return {
                                 ...event,
                                 votes: event.votes - 1

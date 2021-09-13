@@ -7,6 +7,7 @@ import CustomSelect from "../../common/CustomSelect";
 import { addEvent } from "../../redux/actions/addevents.actions";
 import { RootState } from "../../store";
 import { EventInterface } from './../../interfaces/Event.interface';
+import styles from '../../styles/styles.module.scss';
 
 const initialForm: any = {
   name: "",
@@ -24,7 +25,7 @@ export default function EventForm() {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [toggleAlert, setToggleAlert] = useState<boolean>(false);
   const [inputStartDateAlert, setInputStartDateAlert] = useState<boolean>(false);
-  const [formValidation, setFormValidation] = useState<object>({name: {required: true, touched: false}, description: { required: true, touched: false }, startDate: {required: true, touched: false, invalid: false}, endDate: {required: true, touched: false, invalid: false}, tags: {required: true, touched: false}});
+  const [formValidation, setFormValidation] = useState({name: {required: true, touched: false}, description: { required: true, touched: false }, startDate: {required: true, touched: false, invalid: false}, endDate: {required: true, touched: false, invalid: false}, tags: {required: true, touched: false}});
   const { events } = useSelector((state: RootState) => state.dashboard);
 
   useEffect(() => {
@@ -81,14 +82,41 @@ export default function EventForm() {
           [name]: e.target.value,
         };
       });
-    }else{
-      setInputStartDateAlert(true);
+      setFormValidation((prevState: any) => {
+        return {
+          ...prevState,
+          [name]: {
+            required: true,
+            invalid: false
+          }
+        }
+      })
+    }else if(name === 'startDate'){
+      setFormValidation((prevState) => {
+        return {
+          ...prevState,
+          [name]: {
+            required: true,
+            touched: true,
+            invalid: true
+          }
+        }
+      })
     }
     if(name === 'endDate'){
       const startDate = new Date(eventData.startDate).getTime();
       const endDate = e.target.valueAsNumber;
       if(startDate > endDate){
-        return false;
+        setFormValidation((prevState) => {
+          return {
+            ...prevState,
+            endDate: {
+              required: true,
+              touched: true,
+              invalid: true
+            }
+          }
+        })
       }else{
         setEventData((prevState: any) => {
           return {
@@ -96,6 +124,16 @@ export default function EventForm() {
             [name]: e.target.value,
           };
         });
+        setFormValidation((prevState) => {
+          return {
+            ...prevState,
+            endDate: {
+              required: false,
+              touched: false,
+              invalid: false
+            }
+          }
+        })
       }
     }
   };
@@ -117,7 +155,18 @@ export default function EventForm() {
         return {
           ...prevState,
           [name]: {
-            
+            required: true,
+            touched: true
+          }
+        }
+      })
+    }else{
+      setFormValidation((prevState) => {
+        return {
+          ...prevState,
+          [name]: {
+            required: false,
+            touched: true
           }
         }
       })
@@ -151,7 +200,7 @@ export default function EventForm() {
               required
               onBlur={handleBlurChange}
             />
-            <Form.Control.Feedback type="invalid">Please enter the event name</Form.Control.Feedback>
+            {formValidation && formValidation.name && formValidation.name.required && formValidation.name.touched && <p className={styles.error}>Please enter the event name</p>}
           </FloatingLabel>
         </Form.Group>
         <Form.Group>
@@ -159,7 +208,6 @@ export default function EventForm() {
             removeOption={removeOption}
             selectOption={handleselectOption}
             selectedOptions={selectedOptions}
-            required
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicStartDate">
@@ -172,7 +220,7 @@ export default function EventForm() {
               value={eventData.startDate}
               required
             />
-            {inputStartDateAlert && <Form.Control.Feedback type="invalid">Start Date should be greater than current date</Form.Control.Feedback>}
+            {formValidation.startDate.invalid && <p className={styles.error}>Start Date should be greater than current date</p>}
           </FloatingLabel>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEventEndDate">
@@ -185,6 +233,7 @@ export default function EventForm() {
               value={eventData.endDate}
               required
             />
+            { formValidation.endDate.invalid && <p className={styles.error}>End Date should be greater than start date</p> }
           </FloatingLabel>
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEventDescription">
@@ -197,7 +246,9 @@ export default function EventForm() {
               onChange={handleInputChange}
               style={{ height: "150px" }}
               required
+              onBlur={handleBlurChange}
             />
+            {formValidation.description.required && formValidation.description.touched && <p className={styles.error}>Please enter the Event Description</p>}
           </FloatingLabel>
         </Form.Group>
         <Button

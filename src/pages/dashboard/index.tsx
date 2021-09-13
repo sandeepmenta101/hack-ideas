@@ -47,8 +47,8 @@ export default function Dashboard() {
           </Form.Group>
         </Row>
           { events.length === 0 && isLoading &&  cardShimmerArr.map((card) => <CardShimmer key={card} />)}
-          {events?.length === 0 ? <h3 className="text-center">No Events</h3> : <Row xs={1} md={2} className="g-4 mt-2">{events.map((event: EventInterface) => (
-            <EventCard {...event} />
+          {events?.length === 0 ? <h3 className="text-center">No Events</h3> : <Row xs={1} md={2} className="g-4 mt-2">{events.map((event: EventInterface, i: number) => (
+            <EventCard {...event} key={`event-${i}`} />
           ))}</Row>}
       </Container>
     </>

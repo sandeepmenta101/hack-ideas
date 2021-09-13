@@ -6,15 +6,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from "../../styles/login.module.scss";
 import { registerEmployee } from '../../redux/actions/register.actions';
 import { RootState } from '../../store';
+import { RegisterInterface } from "../../interfaces/Register.interface";
 export default function Register() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RegisterInterface>({
     employeeId: "",
     employeeName: "",
   });
   const dispatch = useDispatch();
-  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [disableSubmit, setDisableSubmit] = useState<boolean>(true);
   const { apiStatus, apiResponse } = useSelector((state: RootState)=> state.register);
-  const [toggleAlert, setToggleAlert] = useState(false);
+  const [toggleAlert, setToggleAlert] = useState<boolean>(false);
 
   useEffect(() => {
 	  if(apiStatus === 'Fail'){

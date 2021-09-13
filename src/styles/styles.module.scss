@@ -16,7 +16,7 @@
 }
 .dropdownWrapper{
     border: 1px solid #ced4da;
-    height: 50px;
+    height: 60px;
     margin-bottom: 15px;
     border-radius: 4px;
   }
@@ -38,7 +38,7 @@
     position: relative;
   }
   .label p{
-      margin: 0;
+      margin: 0 0 0 15px;
   }
   .label i{
     position: absolute;
@@ -63,4 +63,8 @@
   }
   .dropdown ul li label{
     cursor: pointer;
+    width: 98%;
+  }
+  .selectedOptions{
+    margin: 4px 0 0 10px;
   }

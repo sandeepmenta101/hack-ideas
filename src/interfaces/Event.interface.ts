@@ -5,4 +5,5 @@ export interface EventInterface {
     endDate: string;
     description: string;
     tags: string[];
+    id: number
 }
